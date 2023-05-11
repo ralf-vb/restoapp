@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ui/welcomepage.dart';
-
+import 'scr/screens/home.dart';
 void main() {
   runApp(const MyHomePage());
 }
@@ -17,7 +16,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: welcomepage(),
+      title: 'Food App',
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      home: home(),
     );
   }
 }
