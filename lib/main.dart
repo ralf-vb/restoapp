@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restoapp/scr/screens/loginpage.dart';
 import 'scr/screens/home.dart';
 void main() {
   runApp(const MyHomePage());
@@ -20,7 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: home(),
+      home: loginpage(),
     );
   }
 }
