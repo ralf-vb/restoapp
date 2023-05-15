@@ -18,17 +18,32 @@ class _registrationpageState extends State<registrationpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100], // Set your desired background color here
-      appBar: AppBar(
-        title: const Text('Registration Page'),
-      ),
-      body: Padding(
+      backgroundColor: Colors.white, // Set your desired background color here
+        body: FractionallySizedBox(
+        alignment: Alignment.center,
+        widthFactor: 1.0,
+        heightFactor: 1.0,
+        child: Container(
+        decoration: BoxDecoration(
+        image: DecorationImage(
+        image: AssetImage('assets/images/pbackground2.jpeg'), // Replace with your image path
+    fit: BoxFit.cover,
+    ),
+    ),
+    child: Padding(
         padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 100.0),
+              Image.asset(
+                'assets/images/projectlogo.png', // Replace with your image path
+                width: 200,
+                height: 200,
+              ),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Username',
@@ -136,11 +151,38 @@ class _registrationpageState extends State<registrationpage> {
                   }
                 },
                 child: const Text('Register'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue, // Set your desired button color here
+                  minimumSize: Size(250, 50), // Set the minimum size of the button
+                  padding: EdgeInsets.symmetric(horizontal: 16.0), // Adjust the padding of the button
+                ),
               ),
+              const SizedBox(height: 16.0),
+              GestureDetector(
+                onTap: () {
+                  // Navigation logic here
+                  // For example, you can use Navigator.push to go to another page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => loginpage()),
+                  );
+                },
+                child: Text(
+                  'Already Have Account?',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
             ],
           ),
         ),
+        ),
       ),
+        ),
+        ),
     );
   }
 
