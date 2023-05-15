@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restoapp/scr/widgets/commons.dart';
 import '../screens/registrationpage.dart';
 import '../screens/forgotpassword.dart';
 import '../screens/home.dart';
@@ -21,6 +22,7 @@ class _loginpageState extends State<loginpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[100], // Set your desired background color here
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -63,7 +65,7 @@ class _loginpageState extends State<loginpage> {
                   _password = value;
                 },
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 16.00),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -75,32 +77,39 @@ class _loginpageState extends State<loginpage> {
                     );
                   }
                 },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(red), // Change the color here
+                ),
                 child: const Text('Login'),
               ),
-              const SizedBox(height: 10.0),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => forgotpassword()),
-                  );
-                },
-                child: Text(
-                  'Forgot Password',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => forgotpassword()),
+                      );
+                    },
+                    child: Text(
+                      'Forgot Password',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.blue,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 5.0),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => registrationpage()),
-                  );
-                },
-                child: const Text('Register'),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => registrationpage()),
+                      );
+                    },
+                    child: const Text('Register'),
+                  ),
+                ],
               ),
             ],
           ),

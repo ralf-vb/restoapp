@@ -18,6 +18,7 @@ class _registrationpageState extends State<registrationpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[100], // Set your desired background color here
       appBar: AppBar(
         title: const Text('Registration Page'),
       ),
