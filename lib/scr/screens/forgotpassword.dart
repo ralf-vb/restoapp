@@ -18,51 +18,78 @@ class _forgotpasswordState extends State<forgotpassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue[100], // Set your desired background color here
-      appBar: AppBar(
-        title: const Text('Forgot Password'),
-      ),
-      body: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-        TextFormField(
-        decoration: InputDecoration(
-        labelText: 'Email',
-          prefixIcon: Icon(Icons.email),
-        ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter your email';
-          }
-          if (!isValidEmail(value)) {
-            return 'Please enter a valid email';
-          }
-          return null;
-        },
-        onSaved: (value) {
-          _email = value;
-        },
-          ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  // Perform login logic here using _email and _password
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => loginpage()),
-                  );
-                }
-              },
-              child: const Text('Forgot'),
+      body: FractionallySizedBox(
+        alignment: Alignment.center,
+        widthFactor: 1.0,
+        heightFactor: 1.0,
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/pbackground2.jpeg'), // Replace with your image path
+              fit: BoxFit.cover,
             ),
-        ],
-       ),
-      ),
+          ),
+          child: Column(
+            children: [
+              AppBar(
+                title: const Text('Forgot Password'),
+                backgroundColor: Colors.transparent,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 200.0),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          prefixIcon: Icon(Icons.email),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          if (!isValidEmail(value)) {
+                            return 'Please enter a valid email';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _email = value;
+                        },
+                      ),
+                      const SizedBox(height: 16.0),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            // Perform login logic here using _email and _password
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => loginpage()),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(250, 50), // Set the desired button size
+                          backgroundColor: Colors.blue, // Set the desired background color
+                        ),
+                        child: const Text(
+                          'Forgot',
+                          style: TextStyle(fontSize: 16.0, color: Colors.white), // Set the desired text size and color
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:restoapp/scr/screens/aboutus.dart';
 import 'package:restoapp/scr/screens/appetizer.dart';
+import 'package:restoapp/scr/screens/cart.dart';
 import 'package:restoapp/scr/screens/dessert.dart';
 import 'package:restoapp/scr/screens/drinks.dart';
 import 'package:restoapp/scr/screens/maincourse.dart';
 import '../screens/loginpage.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 
 class home extends StatelessWidget {
@@ -46,15 +49,15 @@ class home extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: const Text(''),
+              title: const Text('Cart'),
               onTap: () {
-                // Handle item 1 tap
+                Navigator.push(context, MaterialPageRoute(builder: (context) => cart()));
               },
             ),
             ListTile(
-              title: const Text('Settings'),
+              title: const Text('About Us'),
               onTap: () {
-                // Handle item 2 tap
+                Navigator.push(context, MaterialPageRoute(builder: (context) => aboutus()));
               },
             ),
             ListTile(
@@ -76,7 +79,10 @@ class home extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: const Text(
                     "What would you like to eat?",
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                        fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Stack(
@@ -138,7 +144,8 @@ class home extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+
+            const SizedBox(height: 40.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -245,6 +252,54 @@ class home extends StatelessWidget {
               ],
             ),
 
+            const SizedBox(height: 40.0),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: const Text(
+                "Popular",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 200, // Adjust the desired carousel height
+                viewportFraction: 0.8, // Set the fraction of the viewport to occupy (from 0.0 to 1.0)
+                aspectRatio: 16 / 9, // Set the desired aspect ratio
+                autoPlay: true, // Enable auto play
+                autoPlayInterval: Duration(seconds: 3), // Set the auto play interval
+                autoPlayAnimationDuration: Duration(milliseconds: 800), // Set the auto play animation duration
+                autoPlayCurve: Curves.fastOutSlowIn, // Set the auto play curve
+                enlargeCenterPage: true, // Enlarge the center item
+                enableInfiniteScroll: true, // Enable infinite scroll
+              ),
+              items: [
+                // Replace the placeholder images with your own image paths
+                'assets/images/food1.jpeg',
+                'assets/images/food2.jpeg',
+                'assets/images/food3.jpeg',
+                'assets/images/food4.jpeg',
+              ].map((imagePath) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: AssetImage(imagePath),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
 
           ],
         ),
