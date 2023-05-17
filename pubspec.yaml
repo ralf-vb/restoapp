@@ -71,8 +71,19 @@ flutter:
       - assets/images/food1.jpeg
       - assets/images/food2.jpeg
       - assets/images/food3.jpeg
-      - assets/images/food4.jpeg
-  #   - images/a_dot_ham.jpeg
+      - assets/images/appetizer1.jpeg
+      - assets/images/appetizer2.jpeg
+      - assets/images/appetizer3.jpeg
+      - assets/images/maincourse1.jpeg
+      - assets/images/maincourse2.jpeg
+      - assets/images/maincourse3.jpg
+      - assets/images/desert 1.jpeg
+      - assets/images/desert 2.jpeg
+      - assets/images/desert3.jpeg
+      - assets/images/drinks1.jpeg
+      - assets/images/drinks2.jpeg
+      - assets/images/drinks3.jpeg
+        #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
