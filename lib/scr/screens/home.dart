@@ -266,33 +266,126 @@ class home extends StatelessWidget {
 
             CarouselSlider(
               options: CarouselOptions(
-                height: 200, // Adjust the desired carousel height
-                viewportFraction: 0.8, // Set the fraction of the viewport to occupy (from 0.0 to 1.0)
-                aspectRatio: 16 / 9, // Set the desired aspect ratio
-                autoPlay: true, // Enable auto play
-                autoPlayInterval: Duration(seconds: 3), // Set the auto play interval
-                autoPlayAnimationDuration: Duration(milliseconds: 800), // Set the auto play animation duration
-                autoPlayCurve: Curves.fastOutSlowIn, // Set the auto play curve
-                enlargeCenterPage: true, // Enlarge the center item
-                enableInfiniteScroll: true, // Enable infinite scroll
+                height: 200,
+                viewportFraction: 0.8,
+                aspectRatio: 16 / 9,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 3),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                enableInfiniteScroll: true,
               ),
               items: [
-                // Replace the placeholder images with your own image paths
-                'assets/images/food1.jpeg',
-                'assets/images/food2.jpeg',
-                'assets/images/food3.jpeg',
-                'assets/images/food4.jpeg',
-              ].map((imagePath) {
+                {
+                  'imagePath': 'assets/images/food1.jpeg',
+                  'text': 'Dumplings',
+                  'price': '\₱170.00',
+                  'details': 'Dumplings with chili and sauce , sour and sweet',
+                },
+
+                {
+                  'imagePath': 'assets/images/food2.jpeg',
+                  'text': 'Seafoods',
+                  'price': '\₱250.00',
+                  'details': 'Seafoods with calamansi flavor, brocoli and sauce',
+                },
+                {
+                  'imagePath': 'assets/images/food3.jpeg',
+                  'text': 'Hotpot',
+                  'price': '\₱200.00',
+                  'details': 'Hotpot de beef with radish,carrots,spinach and red egg',
+                },
+                {
+                  'imagePath': 'assets/images/food4.jpeg',
+                  'text': 'Barberque',
+                  'price': '\₱300.00',
+                  'details': 'Barberque de vegetable stick with gensing',
+                },
+                // Add more items...
+              ].map((item) {
                 return Builder(
                   builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: AssetImage(imagePath),
-                          fit: BoxFit.cover,
+                    return GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item['text']!,
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.0),
+                                  Text(
+                                    item['details']!,
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  SizedBox(height: 16.0),
+                                  Text(
+                                    'Price: ${item['price']}',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 16.0),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Add logic for button press
+                                    },
+                                    child: Text('Add to Cart'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(item['imagePath']!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                item['text']!,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                item['price']!,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     );
@@ -300,6 +393,8 @@ class home extends StatelessWidget {
                 );
               }).toList(),
             ),
+
+
 
           ],
         ),
