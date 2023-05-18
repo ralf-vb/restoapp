@@ -1,73 +1,152 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class drinks extends StatelessWidget {
-  drinks({Key? key}) : super(key: key);
+class drinks extends StatefulWidget {
+  const drinks({Key? key}) : super(key: key);
 
-  final List<Map<String, dynamic>> drinksList = [
+  @override
+  _drinksState createState() => _drinksState();
+}
+
+class _drinksState extends State<drinks> {
+  int _currentIndex = 0;
+  CarouselController _carouselController = CarouselController();
+
+  final List<Map<String, String>> items = [
     {
       'imagePath': 'assets/images/drinks1.jpeg',
-      'name': 'Drink 1',
-      'price': '\$5.99',
+      'text': 'Mocha Frappe',
+      'price': '\₱150.00',
+      'details':
+          'Chocolate milk extra with extra chocolate syrup mixed in.May 15, 2016',
     },
     {
       'imagePath': 'assets/images/drinks2.jpeg',
-      'name': 'Drink 2',
-      'price': '\$4.99',
+      'text': 'Taro Milk Tea',
+      'price': '\₱100.00',
+      'details':
+          'Sweet, rich, and creamy taro root combines with classic milk tea',
     },
     {
       'imagePath': 'assets/images/drinks3.jpeg',
-      'name': 'Drink 3',
-      'price': '\$6.99',
+      'text': 'Coffee Iced Latte',
+      'price': '\₱150.00',
+      'details': 'A single or double shot of espresso ,',
     },
+
+    // Add more items...
   ];
+
+  void _nextItem() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % items.length;
+    });
+  }
+
+  void _previousItem() {
+    setState(() {
+      _currentIndex = (_currentIndex - 1) % items.length;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 300.0),
-        child: CarouselSlider(
-          options: CarouselOptions(
-            height: 200,
-            aspectRatio: 16 / 9,
-            viewportFraction: 0.8,
-            initialPage: 0,
-            enableInfiniteScroll: true,
-            autoPlay: true,
-            autoPlayInterval: Duration(seconds: 3),
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enlargeCenterPage: true,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                'assets/images/pbackground2.jpeg'), // Replace with your image path
+            fit: BoxFit.cover,
           ),
-          items: drinksList.map((drink) {
-            return Column(
-              children: [
-                Image.asset(
-                  drink['imagePath'],
-                  height: 300,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+        ),
+        child: GestureDetector(
+          onHorizontalDragEnd: (details) {
+            if (details.velocity.pixelsPerSecond.dx < 0) {
+              // Swipe to the left
+              _carouselController.nextPage();
+            } else if (details.velocity.pixelsPerSecond.dx > 0) {
+              // Swipe to the right
+              _carouselController.previousPage();
+            }
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 250),
+              CarouselSlider(
+                carouselController: _carouselController,
+                options: CarouselOptions(
+                  height: 200,
+                  viewportFraction: 0.8,
+                  aspectRatio: 16 / 9,
+                  autoPlay: true,
+                  autoPlayInterval:
+                      Duration(seconds: 5), // Adjust the interval as needed
+                  enlargeCenterPage: true,
+                  onPageChanged: (index, _) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
                 ),
-                SizedBox(height: 10),
-                Text(
-                  drink['name'],
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                items: items.map((item) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(item['imagePath']!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              Container(
+                padding: EdgeInsets.all(16.0),
+                color: Colors.blue[100], // Set the desired background color
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      items[_currentIndex]['text']!,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8.0),
+                    Text(
+                      items[_currentIndex]['details']!,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 16.0),
+                    Text(
+                      'Price: ${items[_currentIndex]['price']}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Add to cart functionality
+                        // Implement the logic for adding the item to the cart
+                        // Here, you can update a cart object or perform any other desired action
+                        print(
+                            'Item added to cart: ${items[_currentIndex]['text']}');
+                      },
+                      child: Text('Add to Cart'),
+                    ),
+                  ],
                 ),
-                Text(
-                  drink['price'],
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green,
-                  ),
-                ),
-              ],
-            );
-          }).toList(),
+              ),
+            ],
+          ),
         ),
       ),
     );

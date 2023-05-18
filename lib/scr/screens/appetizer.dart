@@ -1,48 +1,150 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class appetizer extends StatelessWidget {
+class appetizer extends StatefulWidget {
   const appetizer({Key? key}) : super(key: key);
+
+  @override
+  _appetizerState createState() => _appetizerState();
+}
+
+class _appetizerState extends State<appetizer> {
+  int _currentIndex = 0;
+  CarouselController _carouselController = CarouselController();
+
+  final List<Map<String, String>> items = [
+    {
+      'imagePath': 'assets/images/appetizer1.jpeg',
+      'text': 'Onion Rings',
+      'price': '\₱150.00',
+      'details': 'Onion rings with served dipping ketchup',
+    },
+    {
+      'imagePath': 'assets/images/appetizer2.jpeg',
+      'text': 'Spring rolls',
+      'price': '\₱100.00',
+      'details': 'Spring rolls served with dipping sauce',
+    },
+    {
+      'imagePath': 'assets/images/appetizer3.jpeg',
+      'text': 'Crunchy Corndog',
+      'price': '\₱200.00',
+      'details': 'A hot dog-style sausage coated in a sweet and savory batter,',
+    },
+
+    // Add more items...
+  ];
+
+  void _nextItem() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % items.length;
+    });
+  }
+
+  void _previousItem() {
+    setState(() {
+      _currentIndex = (_currentIndex - 1) % items.length;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 300.0),
-        child: CarouselSlider(
-          options: CarouselOptions(
-            height: 200, // Adjust the height as needed
-            aspectRatio: 3 / 2, // Adjust the aspect ratio as needed
-            viewportFraction: 0.8, // Adjust the fraction of the viewport you want to show
-            initialPage: 0, // Set the initial page
-            enableInfiniteScroll: true, // Set to false if you don't want infinite scrolling
-            autoPlay: true, // Set to true for automatic sliding
-            autoPlayInterval: Duration(seconds: 3), // Adjust the interval between slides
-            autoPlayAnimationDuration: Duration(milliseconds: 800), // Adjust the animation duration
-            autoPlayCurve: Curves.fastOutSlowIn, // Adjust the animation curve
-            enlargeCenterPage: true, // Set to true if you want the center item to be larger
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                'assets/images/pbackground2.jpeg'), // Replace with your image path
+            fit: BoxFit.cover,
           ),
-          items: [
-            // Replace the Placeholder widgets with your own images
-            Image.asset(
-              'assets/images/appetizer1.jpeg',
-              height: 300, // Adjust the height of the image
-              width: 400, // Adjust the width of the image
-              fit: BoxFit.cover,
-            ),
-            Image.asset(
-              'assets/images/appetizer2.jpeg',
-              height: 300, // Adjust the height of the image
-              width: 400, // Adjust the width of the image
-              fit: BoxFit.cover,
-            ),
-            Image.asset(
-              'assets/images/appetizer3.jpeg',
-              height: 300, // Adjust the height of the image
-              width: 400, // Adjust the width of the image
-              fit: BoxFit.cover,
-            ),
-          ],
+        ),
+        child: GestureDetector(
+          onHorizontalDragEnd: (details) {
+            if (details.velocity.pixelsPerSecond.dx < 0) {
+              // Swipe to the left
+              _carouselController.nextPage();
+            } else if (details.velocity.pixelsPerSecond.dx > 0) {
+              // Swipe to the right
+              _carouselController.previousPage();
+            }
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 250),
+              CarouselSlider(
+                carouselController: _carouselController,
+                options: CarouselOptions(
+                  height: 200,
+                  viewportFraction: 0.8,
+                  aspectRatio: 16 / 9,
+                  autoPlay: true,
+                  autoPlayInterval:
+                      Duration(seconds: 5), // Adjust the interval as needed
+                  enlargeCenterPage: true,
+                  onPageChanged: (index, _) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+                items: items.map((item) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(item['imagePath']!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              Container(
+                padding: EdgeInsets.all(16.0),
+                color: Colors.blue[100], // Set the desired background color
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      items[_currentIndex]['text']!,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8.0),
+                    Text(
+                      items[_currentIndex]['details']!,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 16.0),
+                    Text(
+                      'Price: ${items[_currentIndex]['price']}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Add to cart functionality
+                        // Implement the logic for adding the item to the cart
+                        // Here, you can update a cart object or perform any other desired action
+                        print(
+                            'Item added to cart: ${items[_currentIndex]['text']}');
+                      },
+                      child: Text('Add to Cart'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
