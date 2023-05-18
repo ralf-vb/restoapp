@@ -8,7 +8,6 @@ import 'package:restoapp/scr/screens/maincourse.dart';
 import '../screens/loginpage.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-
 class home extends StatelessWidget {
   const home({Key? key}) : super(key: key);
 
@@ -116,8 +115,7 @@ class home extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 5,
+            const SizedBox(height: 5,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -278,29 +276,29 @@ class home extends StatelessWidget {
               ),
               items: [
                 {
-                  'imagePath': 'assets/images/food1.jpeg',
-                  'text': 'Dumplings',
-                  'price': '\₱170.00',
-                  'details': 'Dumplings with chili and sauce , sour and sweet',
+                  'imagePath': 'assets/images/appetizer1.jpeg',
+                  'text': 'Onion Rings',
+                  'price': '\₱150.00',
+                  'details': 'Onion rings with served dipping ketchup',
                 },
 
                 {
-                  'imagePath': 'assets/images/food2.jpeg',
-                  'text': 'Seafoods',
-                  'price': '\₱250.00',
-                  'details': 'Seafoods with calamansi flavor, brocoli and sauce',
+                  'imagePath': 'assets/images/desert 1.jpeg',
+                  'text': 'Black Forest Cake',
+                  'price': '\₱450.00',
+                  'details': 'Cake sandwiched with whipped cream and cherries',
                 },
                 {
-                  'imagePath': 'assets/images/food3.jpeg',
-                  'text': 'Hotpot',
-                  'price': '\₱200.00',
-                  'details': 'Hotpot de beef with radish,carrots,spinach and red egg',
+                  'imagePath': 'assets/images/drinks3.jpeg',
+                  'text': 'Coffee Iced latte',
+                  'price': '\₱100.00',
+                  'details': 'A single or double shot of espresso ',
                 },
                 {
-                  'imagePath': 'assets/images/food4.jpeg',
-                  'text': 'Barberque',
-                  'price': '\₱300.00',
-                  'details': 'Barberque de vegetable stick with gensing',
+                  'imagePath': 'assets/images/maincourse3.jpg',
+                  'text': 'Chicken Afritada',
+                  'price': '\₱100.00',
+                  'details': 'Made with chicken in tomato sauce with potatoes,carrots and bell peppers',
                 },
                 // Add more items...
               ].map((item) {
