@@ -158,7 +158,7 @@ class home extends StatelessWidget {
                           );
                         },
                         child: Image.asset(
-                          'assets/images/appetizer.jpeg',
+                          'assets/images/appetizer.jpg',
                           width: 100,
                           height: 100,
                           fit: BoxFit.cover,
@@ -183,7 +183,7 @@ class home extends StatelessWidget {
                           );
                         },
                         child: Image.asset(
-                          'assets/images/dessert.jpeg',
+                          'assets/images/dessert.jpg',
                           width: 100,
                           height: 100,
                           // fit: BoxFit.cover,
@@ -233,7 +233,7 @@ class home extends StatelessWidget {
                           );
                         },
                         child: Image.asset(
-                          'assets/images/drinks.jpeg',
+                          'assets/images/drinks.jpg',
                           width: 100,
                           height: 100,
                           fit: BoxFit.cover,
