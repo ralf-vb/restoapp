@@ -49,11 +49,11 @@ class _appetizerState extends State<appetizer> {
     });
   }
 
-  void addToCart() {
+  void addToCart(int quantity) {
     final selectedItem = items[_currentIndex];
     final itemToAdd = {
       'item': selectedItem,
-      'quantity': _quantity,
+      'quantity': quantity,
     };
     setState(() {
       cartItems.add(itemToAdd);
@@ -68,6 +68,10 @@ class _appetizerState extends State<appetizer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Appetizer'),
+        backgroundColor: Colors.blue[100],
+      ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -90,7 +94,7 @@ class _appetizerState extends State<appetizer> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 250),
+              const SizedBox(height: 100),
               CarouselSlider(
                 carouselController: _carouselController,
                 options: CarouselOptions(
@@ -181,7 +185,9 @@ class _appetizerState extends State<appetizer> {
                     ),
                     SizedBox(height: 16.0),
                     ElevatedButton(
-                      onPressed: addToCart,
+                      onPressed: () {
+                        addToCart(_quantity);
+                      },
                       child: Text('Add to Cart'),
                     ),
                   ],
@@ -191,58 +197,63 @@ class _appetizerState extends State<appetizer> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Cart(cartItems: cartItems),
+            ),
+          );
+        },
+        child: Icon(Icons.shopping_cart),
+      ),
     );
   }
 }
 
-class CartPage extends StatefulWidget {
+class Cart extends StatefulWidget {
   final List<Map<String, dynamic>> cartItems;
 
-  const CartPage({Key? key, required this.cartItems}) : super(key: key);
+  const Cart({Key? key, required this.cartItems}) : super(key: key);
 
   @override
-  _CartPageState createState() => _CartPageState();
+  _CartState createState() => _CartState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _CartState extends State<Cart> {
+  void removeFromCart(int index) {
+    setState(() {
+      widget.cartItems.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Cart'),
       ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Cart Items:',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+      body: ListView.builder(
+        itemCount: widget.cartItems.length,
+        itemBuilder: (context, index) {
+          final item = widget.cartItems[index]['item'] as Map<String, dynamic>;
+          final quantity = widget.cartItems[index]['quantity'] as int;
+
+          return ListTile(
+            leading: Image.asset(
+              item['imagePath'],
+              width: 50,
+              height: 50,
             ),
-            SizedBox(height: 16.0),
-            Expanded(
-              child: ListView.builder(
-                itemCount: widget.cartItems.length,
-                itemBuilder: (context, index) {
-                  final item = widget.cartItems[index];
-                  return ListTile(
-                    leading: Image.asset(
-                      item['item']['imagePath'],
-                      width: 50,
-                      height: 50,
-                    ),
-                    title: Text(item['item']['text']),
-                    subtitle: Text('Quantity: ${item['quantity']}'),
-                  );
-                },
-              ),
+            title: Text(item['text']),
+            subtitle: Text('Quantity: $quantity'),
+            trailing: IconButton(
+              onPressed: () => removeFromCart(index),
+              icon: Icon(Icons.remove_shopping_cart),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
